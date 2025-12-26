@@ -1,10 +1,10 @@
 package com.mongostudy.workshopmongo.controller;
 
+import com.mongostudy.workshopmongo.dto.UserDTO;
 import com.mongostudy.workshopmongo.entities.User;
+import com.mongostudy.workshopmongo.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,14 +14,25 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
+    private UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        User maria = new User(1L, "Maria", "maria@gmail.com");
-        User alex = new User(2L, "Alex Green", "alex@gmail.com");
+    public ResponseEntity<List<UserDTO>> findAll() {
+        List<User> list = userService.findAll();
+        List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).toList();
 
-        List<User> list = new ArrayList<>();
-        list.addAll(Arrays.asList(maria, alex));
+        return ResponseEntity.ok().body(listDTO);
+    }
 
-        return ResponseEntity.ok().body(list);
+    @PostMapping
+    public ResponseEntity<User> save(@RequestBody User user) {
+        User obj = userService.save(user);
+
+        return ResponseEntity.ok().body(obj);
+
     }
 }
