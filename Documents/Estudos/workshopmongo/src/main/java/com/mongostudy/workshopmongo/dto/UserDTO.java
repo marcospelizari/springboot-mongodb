@@ -1,8 +1,11 @@
 package com.mongostudy.workshopmongo.dto;
 
+import com.mongostudy.workshopmongo.entities.Post;
 import com.mongostudy.workshopmongo.entities.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDTO implements Serializable {
 
