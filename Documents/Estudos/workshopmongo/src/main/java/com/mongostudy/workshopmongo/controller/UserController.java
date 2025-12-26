@@ -1,6 +1,7 @@
 package com.mongostudy.workshopmongo.controller;
 
 import com.mongostudy.workshopmongo.dto.UserDTO;
+import com.mongostudy.workshopmongo.entities.Post;
 import com.mongostudy.workshopmongo.entities.User;
 import com.mongostudy.workshopmongo.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +49,17 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@RequestBody UserDTO userDTO, @PathVariable String id) {
+        User obj = userService.fromDTO(userDTO);
+        obj.setId(id);
+        obj = userService.update(obj);
+        return ResponseEntity.noContent().build();
+    }
 
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
+    }
 }
