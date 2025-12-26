@@ -1,5 +1,6 @@
 package com.mongostudy.workshopmongo.config;
 
+import com.mongostudy.workshopmongo.dto.AuthorDTO;
 import com.mongostudy.workshopmongo.entities.Post;
 import com.mongostudy.workshopmongo.entities.User;
 import com.mongostudy.workshopmongo.repository.PostRepository;
@@ -34,8 +35,8 @@ public class Instantiation implements CommandLineRunner {
 
          User maria = userService.findById("694e8b7b08ac7eec18fe1b24");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem!!!", "Vou viajar para São Paulo. Abraços!", maria);
-        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia!!!", "Acordei feliz hoje!", maria);
+        Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem!!!", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia!!!", "Acordei feliz hoje!", new AuthorDTO(maria));
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
