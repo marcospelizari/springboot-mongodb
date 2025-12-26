@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -26,6 +27,12 @@ public class UserController {
         List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).toList();
 
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(new UserDTO(obj));
     }
 
     @PostMapping
