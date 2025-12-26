@@ -1,12 +1,12 @@
 package com.mongostudy.workshopmongo.service;
 
+import com.mongostudy.workshopmongo.dto.UserDTO;
 import com.mongostudy.workshopmongo.entities.User;
 import com.mongostudy.workshopmongo.repository.UserRepository;
 import com.mongostudy.workshopmongo.service.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,5 +29,9 @@ public class UserService {
 
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    public User fromDTO(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 }

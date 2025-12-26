@@ -5,11 +5,10 @@ import com.mongostudy.workshopmongo.entities.User;
 import com.mongostudy.workshopmongo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -36,10 +35,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user) {
-        User obj = userService.save(user);
-
-        return ResponseEntity.ok().body(obj);
-
+    public ResponseEntity<Void> save(@RequestBody UserDTO userDTO) {
+        User obj = userService.fromDTO(userDTO);
+        obj = userService.save(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
+
+
 }
